@@ -1,0 +1,70 @@
+#include<iostream.h>
+#include<conio.h>
+int max(int a,int b)
+{
+ return(a>b)?a:b;
+ }
+ int knapsack(int W,int wt[],int val[],int n)
+ {
+ int i,w;
+ int k[10][10];
+ for(i=0;i<=n;i++)
+ {
+  for(w=0;w<=W;w++)
+  {
+   if(i==0||w==0)
+   {
+    k[i][w]=0;
+    cout<<k[i][w]<<"\t";
+    }
+    else if(wt[i-1]<=w)
+    {
+	  k[i][w]=max((val[i-1]+k[i-1][w-wt[i-1]]),k[i-1][w]);
+	  cout<<k[i][w]<<"\t";
+      }
+      else
+      {
+       k[i][w]=k[i-1][w];
+       cout<<k[i][w]<<"\t";
+       }
+
+	     }
+	     cout<<"\n";
+    }
+    i=n;
+    w=W;
+    while(i>0&&w>0)
+    {
+     if(k[i][w]==k[i-1][w])
+     {
+      k[i][w]=k[i-1][w];
+      }
+      else
+      {
+       cout<<i<<"\t";
+       k[i][w]=k[i-1][w-wt[i]] ;
+       }
+    return k[i-1][w-1];
+   }
+void main()
+{
+clrscr();
+int wi[10],val[10],W,n,k1;
+cout<<"enter maximum weight:";
+cin>>W;
+cout<<"enter no of items you want to insert" ;
+cin>>n;
+cout<<"enter weight of all items" ;
+for(int i=0;i<n;i++)
+{
+  cin>>wi[i];
+  }
+  cout<<"enter value of all items:";
+  for(int j=0;j<n;j++)
+  {
+   cin>>val[j];
+   }
+k1=knapsack(W,wi,val,n);
+cout<<"Maximum value:"<<k1;
+  getch();
+}
